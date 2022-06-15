@@ -7,3 +7,7 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    MATERIAL_DESIGN_VERSION = '1.6.1'
+}
