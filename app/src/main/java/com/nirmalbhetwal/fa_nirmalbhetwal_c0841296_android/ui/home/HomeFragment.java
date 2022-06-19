@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -50,7 +51,7 @@ public class HomeFragment extends Fragment {
                 permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
                 permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
-                if (shouldShowRequestPermissionRationale(permissions.get(0)) == true) {
+                if (shouldShowRequestPermissionRationale(permissions.get(0))) {
                     googleMap.setMyLocationEnabled(true);
                     //To add marker
                     LatLng sydney = new LatLng(-34, 151);
@@ -59,8 +60,32 @@ public class HomeFragment extends Fragment {
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
+
+                googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(@NonNull LatLng latLng) {
+                        googleMap.clear();
+
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.title(latLng.latitude + " : " + latLng.longitude);
+                        markerOptions.position(latLng);
+                        googleMap.addMarker(markerOptions);
+
+                        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(new CameraPosition(
+                                latLng,
+                                10,
+                                0,
+                                0
+                        ));
+
+                        googleMap.animateCamera(cameraUpdate, null);
+                    }
+                });
             }
         });
+
+
+
         return view;
     }
     @Override
