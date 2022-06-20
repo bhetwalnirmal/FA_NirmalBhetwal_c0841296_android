@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,14 +31,20 @@ import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.SaveLocationActivity;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.databinding.FragmentHomeBinding;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
-    private static final String LOCATION_TO_BE_SAVED = "LOCATION_TO_BE_SAVED";
+    public static final String LOCATION_TO_BE_SAVED = "LOCATION_TO_BE_SAVED";
+    public static final String DECODED_ADDRESS = "DECODED_ADDRESS";
     private MapView mMapView;
     private GoogleMap googleMap;
     private List<String> permissions = new ArrayList<>();
+    private List<Address> addresses = new ArrayList<>();
+    String decodedAddress = "";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,13 +71,26 @@ public class HomeFragment extends Fragment {
                     LatLng sydney = new LatLng(-34, 151);
                     googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
                     // For zooming functionality
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(5).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
 
                 googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                     @Override
                     public void onMapLongClick(@NonNull LatLng latLng) {
+                        Geocoder geocoder = new Geocoder(getContext(), Locale.ENGLISH);
+                        try {
+                            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+
+                            if (addresses.size() != 0) {
+                                Address address = addresses.get(0);
+                                String stringAddress = address.getAddressLine(0);
+
+                                decodedAddress = String.format("%s", stringAddress);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         googleMap.clear();
 
                         MarkerOptions markerOptions = new MarkerOptions();
@@ -93,6 +114,7 @@ public class HomeFragment extends Fragment {
                                         // Continue with delete operation
                                         Intent intent = new Intent(getContext(), SaveLocationActivity.class);
                                         intent.putExtra(LOCATION_TO_BE_SAVED, latLng);
+                                        intent.putExtra(DECODED_ADDRESS, decodedAddress);
                                         startActivity(intent);
                                     }
                                 })
