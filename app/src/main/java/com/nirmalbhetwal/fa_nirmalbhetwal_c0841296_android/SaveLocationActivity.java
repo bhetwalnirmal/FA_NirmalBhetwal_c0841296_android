@@ -3,12 +3,14 @@ package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -85,19 +87,21 @@ public class SaveLocationActivity extends AppCompatActivity {
     }
 
     private void saveUserLocationToDatabase() {
-            userLocation = new UserLocation();
-            userLocation.setLatitude(currentLatLng.latitude);
-            userLocation.setLongitude(currentLatLng.longitude);
-            userLocation.setTitle(address);
-            userLocation.setDescription(etDescription.getText().toString().trim());
-            userLocation.setFavourite(isFavourite.isChecked());
-            userLocation.setHasVisitedTheLocation(hasVisited.isChecked());
-            getUserLocationRepository().insertUserLocation(userLocation);
+        userLocation = new UserLocation();
+        userLocation.setLatitude(currentLatLng.latitude);
+        userLocation.setLongitude(currentLatLng.longitude);
+        userLocation.setTitle(address);
+        userLocation.setDescription(etDescription.getText().toString().trim());
+        userLocation.setFavourite(isFavourite.isChecked());
+        userLocation.setHasVisitedTheLocation(hasVisited.isChecked());
+        getUserLocationRepository().insertUserLocation(userLocation);
 
-            List<UserLocation> list = this.getUserLocationRepository().getAllLocations();
-            for(UserLocation location : list) {
-                Log.d("TAG", location.getTitle() + location.getDescription());
-            }
+        Toast.makeText(this, "Location saved successfully", Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     private void getLocationValues() {
