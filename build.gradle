@@ -11,4 +11,5 @@ task clean(type: Delete) {
 
 ext {
     MATERIAL_DESIGN_VERSION = '1.6.1'
+    roomVersion = '2.2.5'
 }
