@@ -1,7 +1,11 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.home;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +26,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.SaveLocationActivity;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+    private static final String LOCATION_TO_BE_SAVED = "LOCATION_TO_BE_SAVED";
     private MapView mMapView;
     private GoogleMap googleMap;
     private List<String> permissions = new ArrayList<>();
@@ -79,6 +85,26 @@ public class HomeFragment extends Fragment {
                         ));
 
                         googleMap.animateCamera(cameraUpdate, null);
+
+                        new AlertDialog.Builder(getContext())
+                                .setTitle("Do you want to save this location ? ")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // Continue with delete operation
+                                        Intent intent = new Intent(getContext(), SaveLocationActivity.class);
+                                        intent.putExtra(LOCATION_TO_BE_SAVED, latLng);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.dismiss();
+                                    }
+                                })
+                                .show();
+
+                        ;
                     }
                 });
             }
