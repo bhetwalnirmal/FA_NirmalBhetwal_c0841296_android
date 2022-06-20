@@ -11,6 +11,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title">Favourite Place Title</string>
-    <string name="menu_favourite_places">Favourite Places</string>
+    <string name="menu_favourite_places">Places</string>
     <string name="title_activity_maps">MapsActivity</string>
 </resources>
