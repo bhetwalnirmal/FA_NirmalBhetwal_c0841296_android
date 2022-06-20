@@ -58,5 +58,23 @@
             app:layout_constraintTop_toBottomOf="@id/locationTitle"
             />
 
+        <TextView
+            android:id="@+id/tvFavoriteLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favourite"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/locationDescription"
+            />
+
+        <Switch
+            android:id="@+id/isFavouriteLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvFavoriteLocation"
+            app:layout_constraintTop_toBottomOf="@id/locationDescription"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
