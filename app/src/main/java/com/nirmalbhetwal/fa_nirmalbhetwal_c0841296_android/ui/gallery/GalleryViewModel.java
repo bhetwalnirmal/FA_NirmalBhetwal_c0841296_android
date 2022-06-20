@@ -1,19 +1,30 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.gallery;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.abstracts.UserLocationDatabase;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
+
+import java.util.List;
+
 public class GalleryViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    MutableLiveData<List<UserLocation>> userLocationLiveData;
+    List<UserLocation> userLocationList;
+    UserLocationDatabase appDB;
 
-    public GalleryViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+    public GalleryViewModel(Context context) {
+        appDB = UserLocationDatabase.getInstance(context);
+        userLocationLiveData = new MutableLiveData<>();
+        init();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    private void init() {
+        userLocationList = appDB.userLocationDao().getAllLocations();
+        userLocationLiveData.setValue(userLocationList);
     }
 }
