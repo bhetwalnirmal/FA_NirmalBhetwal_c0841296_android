@@ -76,5 +76,33 @@
             app:layout_constraintTop_toBottomOf="@id/locationDescription"
             />
 
+        <TextView
+            android:id="@+id/tvVisitedLocationLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Have you visited this location?"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/isFavouriteLocation"
+            />
+
+        <Switch
+            android:id="@+id/hasVisitedTheLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvFavoriteLocation"
+            app:layout_constraintTop_toBottomOf="@id/isFavouriteLocation"
+            />
+
+        <Button
+            android:id="@+id/saveMapLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            app:layout_constraintTop_toBottomOf="@id/hasVisitedTheLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
