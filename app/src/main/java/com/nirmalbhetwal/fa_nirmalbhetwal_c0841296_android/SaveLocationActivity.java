@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,15 +23,22 @@ import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.home.HomeFragment;
 public class SaveLocationActivity extends AppCompatActivity {
     private String address = "";
     private LatLng currentLatLng;
-    EditText etTitle;
+    EditText etTitle, etDescription;
     private MapView mMapView;
     private GoogleMap googleMap;
+    private UserLocation userLocation;
+    Switch isFavourite, hasVisited;
+    Button saveLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_location);
         etTitle = (EditText) findViewById(R.id.locationTitle);
+        etDescription = (EditText) findViewById(R.id.locationDescription);
+        hasVisited = (Switch) findViewById(R.id.hasVisitedTheLocation);
+        isFavourite = (Switch) findViewById(R.id.isFavouriteLocation);
+        saveLocation = (Button) findViewById(R.id.saveMapLocation);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -44,6 +54,13 @@ public class SaveLocationActivity extends AppCompatActivity {
             etTitle.setHint("Location not found");
         }
 
+        saveLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveUserLocationToDatabase();
+            }
+        });
+
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -51,10 +68,19 @@ public class SaveLocationActivity extends AppCompatActivity {
                 // For zooming functionality
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLatLng).zoom(5).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                userLocation.setLatLng(currentLatLng);
+                userLocation.setTitle(address);
+                userLocation.setDescription(etDescription.getText().toString().trim());
+                userLocation.setFavourite(isFavourite.isChecked());
+                userLocation.setHasVisitedTheLocation(hasVisited.isChecked());
             }
         });
 
         mapFragment.getView().setClickable(false);
+    }
+
+    private void saveUserLocationToDatabase() {
+
     }
 
     private void getLocationValues() {
