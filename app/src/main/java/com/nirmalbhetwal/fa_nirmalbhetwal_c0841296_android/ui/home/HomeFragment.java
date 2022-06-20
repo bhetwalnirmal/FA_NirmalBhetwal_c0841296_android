@@ -67,15 +67,15 @@ public class HomeFragment extends Fragment {
 
                 if (shouldShowRequestPermissionRationale(permissions.get(0))) {
                     googleMap.setMyLocationEnabled(true);
-                    //To add marker
-                    LatLng sydney = new LatLng(-34, 151);
-                    googleMap.addMarker(new MarkerOptions().position(sydney).title("Title").snippet("Marker Description"));
-                    // For zooming functionality
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(5).build();
-                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
 
+                //To add marker
+                LatLng sydney = new LatLng(43.6532, -79.3832);
+                // For zooming functionality
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
                     @Override
                     public void onMapLongClick(@NonNull LatLng latLng) {
                         Geocoder geocoder = new Geocoder(getContext(), Locale.ENGLISH);

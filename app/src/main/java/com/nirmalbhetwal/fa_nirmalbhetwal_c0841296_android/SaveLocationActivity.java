@@ -18,7 +18,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.abstracts.UserLocationDatabase;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.daos.UserLocationDao;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.repositories.UserLocationRepository;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.home.HomeFragment;
+
+import java.util.List;
 
 public class SaveLocationActivity extends AppCompatActivity {
     private String address = "";
@@ -29,6 +35,8 @@ public class SaveLocationActivity extends AppCompatActivity {
     private UserLocation userLocation;
     Switch isFavourite, hasVisited;
     Button saveLocation;
+    UserLocationRepository userLocationRepository;
+    UserLocationDatabase appDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,8 @@ public class SaveLocationActivity extends AppCompatActivity {
         hasVisited = (Switch) findViewById(R.id.hasVisitedTheLocation);
         isFavourite = (Switch) findViewById(R.id.isFavouriteLocation);
         saveLocation = (Button) findViewById(R.id.saveMapLocation);
+
+        appDB = UserLocationDatabase.getInstance(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -66,13 +76,8 @@ public class SaveLocationActivity extends AppCompatActivity {
             public void onMapReady(@NonNull GoogleMap googleMap) {
                 googleMap.addMarker(new MarkerOptions().position(currentLatLng).title("Title").snippet("Marker Description"));
                 // For zooming functionality
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLatLng).zoom(5).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(currentLatLng).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                userLocation.setLatLng(currentLatLng);
-                userLocation.setTitle(address);
-                userLocation.setDescription(etDescription.getText().toString().trim());
-                userLocation.setFavourite(isFavourite.isChecked());
-                userLocation.setHasVisitedTheLocation(hasVisited.isChecked());
             }
         });
 
@@ -80,11 +85,27 @@ public class SaveLocationActivity extends AppCompatActivity {
     }
 
     private void saveUserLocationToDatabase() {
+            userLocation = new UserLocation();
+            userLocation.setLatitude(currentLatLng.latitude);
+            userLocation.setLongitude(currentLatLng.longitude);
+            userLocation.setTitle(address);
+            userLocation.setDescription(etDescription.getText().toString().trim());
+            userLocation.setFavourite(isFavourite.isChecked());
+            userLocation.setHasVisitedTheLocation(hasVisited.isChecked());
+            getUserLocationRepository().insertUserLocation(userLocation);
 
+            List<UserLocation> list = this.getUserLocationRepository().getAllLocations();
+            for(UserLocation location : list) {
+                Log.d("TAG", location.getTitle() + location.getDescription());
+            }
     }
 
     private void getLocationValues() {
         address = getIntent().getStringExtra(HomeFragment.DECODED_ADDRESS);
         currentLatLng = (LatLng) getIntent().getExtras().getParcelable(HomeFragment.LOCATION_TO_BE_SAVED);
+    }
+
+    private UserLocationDao getUserLocationRepository () {
+        return appDB.userLocationDao();
     }
 }
