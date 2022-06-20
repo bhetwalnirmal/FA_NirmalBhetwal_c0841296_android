@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        tools:context=".SaveLocationActivity">
+
+        <FrameLayout
+            android:id="@+id/mapSaveLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="false"
+            >
+
+            <fragment
+                android:id="@+id/mapViewSaveLocation"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                tools:context=".SaveLocationActivity" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/saveLocationHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Current Location"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/mapSaveLocation"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/locationTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter title"
+            app:layout_constraintTop_toBottomOf="@id/saveLocationHeading"
+            />
+
+        <EditText
+            android:id="@+id/locationDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter description of the location"
+            android:minHeight="150dp"
+            app:layout_constraintTop_toBottomOf="@id/locationTitle"
+            />
+
+        <TextView
+            android:id="@+id/tvFavoriteLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Favourite"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/locationDescription"
+            />
+
+        <Switch
+            android:id="@+id/isFavouriteLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvFavoriteLocation"
+            app:layout_constraintTop_toBottomOf="@id/locationDescription"
+            />
+
+        <TextView
+            android:id="@+id/tvVisitedLocationLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Have you visited this location?"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/isFavouriteLocation"
+            />
+
+        <Switch
+            android:id="@+id/hasVisitedTheLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvFavoriteLocation"
+            app:layout_constraintTop_toBottomOf="@id/isFavouriteLocation"
+            />
+
+        <Button
+            android:id="@+id/saveMapLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            app:layout_constraintTop_toBottomOf="@id/hasVisitedTheLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
