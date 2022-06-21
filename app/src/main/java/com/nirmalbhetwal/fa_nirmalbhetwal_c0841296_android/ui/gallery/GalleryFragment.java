@@ -1,8 +1,13 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.gallery;
 
+import static android.content.Context.LOCATION_SERVICE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -20,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.MainActivity;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.SaveLocationActivity;
@@ -41,11 +47,19 @@ public class GalleryFragment extends Fragment {
     private List<UserLocation> userLocationList;
     private UserLocationDatabase appDB;
     private SearchView searchView;
+    private Location currrentLocation;
+    private LocationManager mLocationManager;
+
+    int LOCATION_REFRESH_TIME = 15000; // 15 seconds to update
+    int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 //        GalleryViewModel galleryViewModel =
 //                new ViewModelProvider(this).get(GalleryViewModel.class);
+        mLocationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+                LOCATION_REFRESH_DISTANCE, mLocationListener);
         placesViewModel = new GalleryViewModel(getContext());
 //        galleryViewModel = new ViewModelProvider(this).get(GalleryViewModel::class);
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
@@ -143,4 +157,12 @@ public class GalleryFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            currrentLocation = location;
+            UserLocation.setCurrentLocation(location);
+        }
+    };
 }

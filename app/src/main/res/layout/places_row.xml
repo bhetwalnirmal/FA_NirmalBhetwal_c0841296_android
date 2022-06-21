@@ -102,17 +102,16 @@ android:orientation="vertical">
                 android:orientation="vertical">
 
                 <FrameLayout
-                    android:id="@+id/mapSaveLocation1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
                     >
 
-                    <fragment
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/recyclerViewMap"
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        tools:context=".MainActivity" />
+                        android:layout_height="200dp"
+                        />
                 </FrameLayout>
 
                 <LinearLayout
@@ -171,7 +170,7 @@ android:orientation="vertical">
                         style="?attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Has Visited" />
+                        android:text="Visited" />
                 </LinearLayout>
 
             </LinearLayout>

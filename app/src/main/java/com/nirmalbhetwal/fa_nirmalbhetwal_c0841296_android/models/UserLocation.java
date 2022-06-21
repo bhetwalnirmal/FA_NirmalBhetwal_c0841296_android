@@ -1,7 +1,10 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models;
 
+import android.location.Location;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -27,6 +30,9 @@ public class UserLocation implements Serializable {
     private boolean hasVisitedTheLocation;
     @ColumnInfo(name = "created_at")
     private long createdAt;
+
+    @Ignore
+    public static Location currentLocation;
 
     public UserLocation () {
         this.title = "";
@@ -100,5 +106,13 @@ public class UserLocation implements Serializable {
 
     public LatLng getLatLng () {
         return new LatLng(latitude, longitude);
+    }
+
+    public static Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public static void setCurrentLocation(Location currentLocation) {
+        UserLocation.currentLocation = currentLocation;
     }
 }

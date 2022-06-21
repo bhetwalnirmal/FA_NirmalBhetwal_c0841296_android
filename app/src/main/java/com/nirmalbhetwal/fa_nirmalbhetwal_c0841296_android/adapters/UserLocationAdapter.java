@@ -1,15 +1,24 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
 
@@ -54,9 +63,19 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
 
         if (userLocation.isHasVisitedTheLocation()) {
             holder.hasVisited.setVisibility(View.VISIBLE);
+            holder.mLinearLayout.setBackgroundColor(Color.parseColor("#B7DAF6"));
         } else {
             holder.hasVisited.setVisibility(View.GONE);
         }
+        holder.mapView.getMapAsync(new OnMapReadyCallback() {
+
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                LatLng coordinates = new LatLng(49, 49);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
+                holder.mapView.onResume();
+            }
+        });
     }
 
     @Override
@@ -77,6 +96,8 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title, subltile, description;
         Button favourite, hasVisited;
+        MapView mapView;
+        LinearLayout mLinearLayout;
 
         public ViewHolder (View itemView) {
             super(itemView);
@@ -86,6 +107,8 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
             this.description = (TextView) itemView.findViewById(R.id.tvUserLocationDescription);
             this.favourite = (Button) itemView.findViewById(R.id.btnIsFavourite);
             this.hasVisited = (Button) itemView.findViewById(R.id.btnHasVisited);
+            this.mapView = (MapView) itemView.findViewById(R.id.recyclerViewMap);
+            this.mLinearLayout = (LinearLayout) itemView.findViewById(R.id.rowFG);
         }
     }
 

@@ -46,6 +46,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "com.google.android.material:material:${MATERIAL_DESIGN_VERSION}"
 
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
     // Room dependencies
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
