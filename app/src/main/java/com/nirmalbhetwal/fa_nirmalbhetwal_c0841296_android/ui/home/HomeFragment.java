@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.SaveLocationActivity;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.abstracts.UserLocationDatabase;
@@ -57,6 +59,7 @@ public class HomeFragment extends Fragment {
     private boolean isEditMode = false;
     private UserLocation editUserLocation;
     private UserLocationDatabase appDB;
+    private FloatingActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         appDB = UserLocationDatabase.getInstance(getContext());
+
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
@@ -90,6 +94,8 @@ public class HomeFragment extends Fragment {
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(location).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                     displayMarkerInMap(editUserLocation);
+                } else {
+                    displayCurrentLocation();
                 }
 
                 googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -151,6 +157,14 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    private void displayCurrentLocation() {
+        LatLng latLng = new LatLng(43.6532, -79.3832);
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(12).build();
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("YOU ARE HERE");
+        googleMap.addMarker(markerOptions);
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
     private void displayMarkerInMap(UserLocation userLocation) {
         MarkerOptions markerOptions = new MarkerOptions().position(userLocation.getLatLng()).title(userLocation.getTitle()).draggable(true);
         if(googleMap != null) {
@@ -167,7 +181,6 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onMarkerDragEnd(@NonNull Marker marker) {
-                    Log.d("TAG", "test");
                     LatLng latLng = marker.getPosition();
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                     dialog.setTitle("Do you want to update the location")
