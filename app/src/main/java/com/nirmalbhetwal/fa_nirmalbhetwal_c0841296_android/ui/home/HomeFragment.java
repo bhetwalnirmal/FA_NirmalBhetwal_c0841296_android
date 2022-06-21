@@ -16,7 +16,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -188,6 +193,10 @@ public class HomeFragment extends Fragment {
 
                                     appDB.userLocationDao().updateUserLocation(editUserLocation);
                                     Toast.makeText(getContext(), "Location updated successfully", Toast.LENGTH_LONG).show();
+
+                                    NavHostFragment.findNavController(HomeFragment.this)
+                                            .navigate(R.id.nav_favourite_places);
+
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null).show();
