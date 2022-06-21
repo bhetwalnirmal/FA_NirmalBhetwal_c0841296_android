@@ -1,86 +1,178 @@
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+<LinearLayout
+    android:id="@+id/rowBG"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:gravity="right"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:background="#0000ff"
+        android:id="@+id/edit_task"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical">
 
-        <!-- Media -->
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:srcCompat="@drawable/ic_launcher_background"
-            android:scaleType="centerCrop"
-            />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="#ff0000"
+        android:id="@+id/delete_task"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <!-- Title, secondary and supporting text -->
-            <TextView
-                android:id="@+id/tvUserLocationTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/title"
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                />
-            <TextView
-                android:id="@+id/tvUserLocationSubTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="subtitle"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                />
-            <TextView
-                android:id="@+id/tvUserLocationDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="more description"
-                android:singleLine="false"
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                />
-
+                android:src="@android:drawable/ic_delete"
+                app:tint="@android:color/white" />
         </LinearLayout>
+    </RelativeLayout>
 
-        <!-- Buttons -->
-        <LinearLayout
-            android:layout_width="wrap_content"
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/rowFG"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:elevation="4dp"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:visibility="visible">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foreground="?attr/selectableItemBackground">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:orientation="horizontal">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnIsFavourite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Favourite"
-                style="?attr/borderlessButtonStyle"
-                />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnHasVisited"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Has Visited"
-                style="?attr/borderlessButtonStyle"
-                />
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-</com.google.android.material.card.MaterialCardView>
+                <!-- Media -->
+
+<!--                <fragment-->
+<!--                    android:id="@+id/mavViewLocationList1"-->
+<!--                    android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="200dp" />-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Title, secondary and supporting text -->
+                    <TextView
+                        android:id="@+id/tvUserLocationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/title"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                    <TextView
+                        android:id="@+id/tvUserLocationSubTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="subtitle"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary" />
+
+                    <TextView
+                        android:id="@+id/tvUserLocationDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:singleLine="false"
+                        android:text="more description"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?android:attr/textColorSecondary" />
+
+                </LinearLayout>
+
+                <!-- Buttons -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnIsFavourite"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:text="Favourite" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnHasVisited"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Has Visited" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+
+</RelativeLayout>
