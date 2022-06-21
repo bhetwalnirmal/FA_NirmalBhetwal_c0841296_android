@@ -194,11 +194,6 @@ public class HomeFragment extends Fragment {
 
                                     appDB.userLocationDao().updateUserLocation(editUserLocation);
                                     Toast.makeText(getContext(), "Location updated successfully", Toast.LENGTH_LONG).show();
-
-                                    NavHostFragment
-                                            .findNavController(HomeFragment.this)
-                                            .navigate(R.id.nav_favourite_places);
-
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null).show();
