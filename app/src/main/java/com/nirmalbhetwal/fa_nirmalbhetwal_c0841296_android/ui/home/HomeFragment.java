@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -186,6 +187,7 @@ public class HomeFragment extends Fragment {
                                     }
 
                                     appDB.userLocationDao().updateUserLocation(editUserLocation);
+                                    Toast.makeText(getContext(), "Location updated successfully", Toast.LENGTH_LONG).show();
                                 }
                             })
                             .setNegativeButton(android.R.string.no, null).show();
