@@ -2,6 +2,7 @@ package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.gallery;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.MainActivity;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.abstracts.UserLocationDatabase;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.adapters.UserLocationAdapter;
@@ -26,6 +28,7 @@ import java.util.List;
 
 public class GalleryFragment extends Fragment {
 
+    public static final String MARKER_EDIT_MODE = "MARKER_EDIT_MODE";
     private FragmentGalleryBinding binding;
     private RecyclerView recyclerView;
     private GalleryViewModel placesViewModel;
@@ -54,7 +57,7 @@ public class GalleryFragment extends Fragment {
         touchListener.setClickable(new UserLocationTouchListener.OnRowClickListener() {
                     @Override
                     public void onRowClicked(int position) {
-                        Toast.makeText(getContext(), "SDFSDFDS", Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
@@ -68,24 +71,13 @@ public class GalleryFragment extends Fragment {
                     public void onSwipeOptionClicked(int viewID, int position) {
                         switch (viewID){
                             case R.id.delete_task:
-//                                new AlertDialog.Builder(DashboardAcitvity.this)
-//                                        .setTitle("Delete UserLocation")
-//                                        .setMessage("Are you sure you want to delete this entry?")
-//                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                                deleteUserLocation(position);
-//                                                UserLocationAdapter.setUserLocationList(UserLocationList);
-//                                            }
-//                                        })
-//                                        .setNegativeButton(android.R.string.cancel, null)
-//                                        .show();
+
                                 break;
                             case R.id.edit_task:
-//                                Intent intent = new Intent(DashboardAcitvity.this, AddUserLocationActivity.class);
-//                                UserLocation UserLocation = UserLocationList.get(position);
-//                                intent.putExtra("UserLocation", UserLocation);
-//                                startActivity(intent);
+                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                UserLocation userLocation = userLocationList.get(position);
+                                intent.putExtra(MARKER_EDIT_MODE, userLocation);
+                                startActivity(intent);
                                 break;
 
                         }
@@ -100,8 +92,7 @@ public class GalleryFragment extends Fragment {
                 userLocationAdapter.setuserLocationList(userLocationList);
             }
         };
-//        final TextView textView = binding.textGallery;
-//        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 

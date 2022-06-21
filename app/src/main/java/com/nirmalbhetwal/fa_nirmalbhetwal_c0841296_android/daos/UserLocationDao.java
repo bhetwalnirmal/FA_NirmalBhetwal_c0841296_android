@@ -3,6 +3,7 @@ package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.daos;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
 
@@ -15,4 +16,7 @@ public interface UserLocationDao {
 
     @Insert
     void insertUserLocation(UserLocation userLocation);
+
+    @Update
+    void updateUserLocation(UserLocation userLocation);
 }

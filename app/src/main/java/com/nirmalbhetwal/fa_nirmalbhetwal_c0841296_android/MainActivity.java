@@ -16,11 +16,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.databinding.ActivityMainBinding;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
+import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.gallery.GalleryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private boolean isEditMode = false;
+    private UserLocation editUserLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        if (getIntent().hasExtra(GalleryFragment.MARKER_EDIT_MODE)) {
+            isEditMode = true;
+            editUserLocation = getIntent().getExtras().getParcelable(GalleryFragment.MARKER_EDIT_MODE);
+
+            displayMarkerInMap(editUserLocation);
+        }
+    }
+
+    private void displayMarkerInMap(UserLocation userLocation) {
+
     }
 
     @Override

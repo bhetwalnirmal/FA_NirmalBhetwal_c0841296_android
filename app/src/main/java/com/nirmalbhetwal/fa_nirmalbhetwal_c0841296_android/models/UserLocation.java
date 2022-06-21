@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "user_locations")
-public class UserLocation {
+public class UserLocation implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "latitude")
@@ -95,5 +96,9 @@ public class UserLocation {
 
     public void setHasVisitedTheLocation(boolean hasVisitedTheLocation) {
         this.hasVisitedTheLocation = hasVisitedTheLocation;
+    }
+
+    public LatLng getLatLng () {
+        return new LatLng(latitude, longitude);
     }
 }
