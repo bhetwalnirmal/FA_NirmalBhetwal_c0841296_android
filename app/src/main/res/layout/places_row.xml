@@ -101,13 +101,20 @@ android:orientation="vertical">
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Media -->
+                <FrameLayout
+                    android:id="@+id/mapSaveLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    >
 
-<!--                <fragment-->
-<!--                    android:id="@+id/mavViewLocationList1"-->
-<!--                    android:name="com.google.android.gms.maps.SupportMapFragment"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="200dp" />-->
+                    <fragment
+                        android:id="@+id/mapViewSaveLocation"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        tools:context=".MainActivity" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
