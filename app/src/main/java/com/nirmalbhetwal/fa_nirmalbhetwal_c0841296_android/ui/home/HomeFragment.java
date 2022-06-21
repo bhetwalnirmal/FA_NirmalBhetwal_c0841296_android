@@ -186,6 +186,7 @@ public class HomeFragment extends Fragment {
                                             String stringAddress = address.getAddressLine(0);
 
                                             decodedAddress = String.format("%s", stringAddress);
+                                            editUserLocation.setTitle(decodedAddress);
                                         }
                                     } catch (IOException e) {
                                         e.printStackTrace();
@@ -194,7 +195,8 @@ public class HomeFragment extends Fragment {
                                     appDB.userLocationDao().updateUserLocation(editUserLocation);
                                     Toast.makeText(getContext(), "Location updated successfully", Toast.LENGTH_LONG).show();
 
-                                    NavHostFragment.findNavController(HomeFragment.this)
+                                    NavHostFragment
+                                            .findNavController(HomeFragment.this)
                                             .navigate(R.id.nav_favourite_places);
 
                                 }
