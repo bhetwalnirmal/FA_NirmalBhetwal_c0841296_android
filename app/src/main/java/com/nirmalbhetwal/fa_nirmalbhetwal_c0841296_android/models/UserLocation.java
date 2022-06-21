@@ -38,6 +38,8 @@ public class UserLocation implements Serializable {
         this.title = "";
         this.description = "";
         this.createdAt = 0;
+        this.hasVisitedTheLocation = false;
+        this.isFavourite = false;
     }
 
     public int getId() {

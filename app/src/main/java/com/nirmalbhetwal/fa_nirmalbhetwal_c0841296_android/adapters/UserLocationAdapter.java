@@ -65,17 +65,9 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
             holder.hasVisited.setVisibility(View.VISIBLE);
             holder.mLinearLayout.setBackgroundColor(Color.parseColor("#B7DAF6"));
         } else {
-            holder.hasVisited.setVisibility(View.GONE);
+            holder.hasVisited.setText("NOT VISITED");
+//            holder.hasVisited.setVisibility(View.GONE);
         }
-        holder.mapView.getMapAsync(new OnMapReadyCallback() {
-
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                LatLng coordinates = new LatLng(49, 49);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates, 15));
-                holder.mapView.onResume();
-            }
-        });
     }
 
     @Override
@@ -107,7 +99,7 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
             this.description = (TextView) itemView.findViewById(R.id.tvUserLocationDescription);
             this.favourite = (Button) itemView.findViewById(R.id.btnIsFavourite);
             this.hasVisited = (Button) itemView.findViewById(R.id.btnHasVisited);
-            this.mapView = (MapView) itemView.findViewById(R.id.recyclerViewMap);
+//            this.mapView = (MapView) itemView.findViewById(R.id.recyclerViewMap);
             this.mLinearLayout = (LinearLayout) itemView.findViewById(R.id.rowFG);
         }
     }
