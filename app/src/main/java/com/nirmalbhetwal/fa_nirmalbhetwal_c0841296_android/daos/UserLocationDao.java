@@ -14,6 +14,9 @@ public interface UserLocationDao {
     @Query("SELECT * FROM user_locations")
     List<UserLocation> getAllLocations();
 
+    @Query("Select * from user_locations where title like '%' || :search || '%' or description like '%' || :search || '%'" )
+    List<UserLocation> getFilteredLocations(String search);
+
     @Insert
     void insertUserLocation(UserLocation userLocation);
 

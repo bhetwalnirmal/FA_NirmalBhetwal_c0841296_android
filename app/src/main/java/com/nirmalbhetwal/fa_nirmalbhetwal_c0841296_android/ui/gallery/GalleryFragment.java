@@ -3,9 +3,11 @@ package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.ui.gallery;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +37,7 @@ public class GalleryFragment extends Fragment {
     private UserLocationAdapter userLocationAdapter;
     private List<UserLocation> userLocationList;
     private UserLocationDatabase appDB;
+    private SearchView searchView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class GalleryFragment extends Fragment {
         userLocationAdapter = new UserLocationAdapter(getContext(), userLocationList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(userLocationAdapter);
+        searchView = (SearchView) root.findViewById(R.id.sVSearchBar);
 
         UserLocationTouchListener touchListener = new UserLocationTouchListener(getActivity(), recyclerView);
         touchListener.setClickable(new UserLocationTouchListener.OnRowClickListener() {
@@ -92,6 +96,20 @@ public class GalleryFragment extends Fragment {
                 userLocationAdapter.setuserLocationList(userLocationList);
             }
         };
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<UserLocation> userLocations = appDB.userLocationDao().getFilteredLocations(s);
+                userLocationAdapter.setuserLocationList(userLocations);
+                return false;
+            }
+        });
 
         return root;
     }

@@ -102,11 +102,12 @@ android:orientation="vertical">
                 android:orientation="vertical">
 
                 <!-- Media -->
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_launcher_background" />
+
+<!--                <fragment-->
+<!--                    android:id="@+id/mavViewLocationList1"-->
+<!--                    android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="200dp" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
