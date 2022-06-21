@@ -1,6 +1,7 @@
 package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.daos;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -22,4 +23,7 @@ public interface UserLocationDao {
 
     @Update
     void updateUserLocation(UserLocation userLocation);
+
+    @Delete
+    void deleteUserLocation(UserLocation userLocation);
 }
