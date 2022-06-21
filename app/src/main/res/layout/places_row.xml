@@ -101,18 +101,19 @@ android:orientation="vertical">
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-<!--                <FrameLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:clickable="false"-->
-<!--                    >-->
+                <FrameLayout
+                    android:id="@+id/frameLayoutMapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    >
 
-<!--                    <com.google.android.gms.maps.MapView-->
-<!--                        android:id="@+id/recyclerViewMap"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="200dp"-->
-<!--                        />-->
-<!--                </FrameLayout>-->
+                    <fragment
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
