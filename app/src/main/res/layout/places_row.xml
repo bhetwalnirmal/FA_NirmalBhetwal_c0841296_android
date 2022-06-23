@@ -82,11 +82,12 @@ android:orientation="vertical">
     android:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recyclerViewConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foreground="?attr/selectableItemBackground">
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card"
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -97,23 +98,29 @@ android:orientation="vertical">
             >
 
             <LinearLayout
+                android:id="@+id/recyclerViewLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <FrameLayout
-                    android:id="@+id/frameLayoutMapView"
+<!--                <fragment-->
+<!--                    android:id="@+id/recyclerViewMapView"-->
+<!--                    xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--                    android:name="com.google.android.gms.maps.MapFragment"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    map:cameraZoom="13"-->
+<!--                    map:mapType="normal"-->
+<!--                    map:liteMode="true"/>-->
+                <com.google.android.gms.maps.MapView
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/recyclerViewMapView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="false"
-                    >
-
-                    <fragment
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                        />
-                </FrameLayout>
+                    android:layout_height="200dp"
+                    map:cameraZoom="13"
+                    map:mapType="normal"
+                    map:liteMode="true"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"

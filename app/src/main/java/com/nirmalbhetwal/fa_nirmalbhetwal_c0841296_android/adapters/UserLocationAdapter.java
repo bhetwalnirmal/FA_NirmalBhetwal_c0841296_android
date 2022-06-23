@@ -2,6 +2,8 @@ package com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +18,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.R;
 import com.nirmalbhetwal.fa_nirmalbhetwal_c0841296_android.models.UserLocation;
 
@@ -68,6 +73,8 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
             holder.hasVisited.setText("NOT VISITED");
 //            holder.hasVisited.setVisibility(View.GONE);
         }
+
+        holder.mapView.setTag(userLocation);
     }
 
     @Override
@@ -85,10 +92,11 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
         public TextView title, subltile, description;
         Button favourite, hasVisited;
         MapView mapView;
+        GoogleMap map;
         LinearLayout mLinearLayout;
 
         public ViewHolder (View itemView) {
@@ -99,8 +107,56 @@ public class UserLocationAdapter extends RecyclerView.Adapter<UserLocationAdapte
             this.description = (TextView) itemView.findViewById(R.id.tvUserLocationDescription);
             this.favourite = (Button) itemView.findViewById(R.id.btnIsFavourite);
             this.hasVisited = (Button) itemView.findViewById(R.id.btnHasVisited);
-//            this.mapView = (MapView) itemView.findViewById(R.id.recyclerViewMap);
+            this.mapView = itemView.findViewById(R.id.recyclerViewMapView);
             this.mLinearLayout = (LinearLayout) itemView.findViewById(R.id.rowFG);
+
+            if (this.mapView != null) {
+                // Initialise the MapView
+                this.mapView.onCreate(null);
+                // Set the map ready callback to receive the GoogleMap object
+                this.mapView.getMapAsync(this);
+                this.mapView.setClickable(false);
+            }
+        }
+
+        @Override
+        public void onMapReady(@NonNull GoogleMap googleMap) {
+            MapsInitializer.initialize(context);
+            map = googleMap;
+            setMapLocation();
+        }
+
+        private void setMapLocation() {
+            if (map == null) {
+                return;
+            }
+
+            UserLocation userLocation = (UserLocation) mapView.getTag();
+            Location currentLocation = UserLocation.getCurrentLocation();
+
+            if (userLocation == null) {
+                return;
+            }
+
+            if (userLocation != null && currentLocation != null) {
+                Polyline polyline = map.addPolyline(
+                        new PolylineOptions()
+                                .clickable(false)
+                                .add(userLocation.getLatLng())
+                                .add(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                );
+
+                MarkerOptions markerOptions = new MarkerOptions().position(userLocation.getLatLng()).title(userLocation.getTitle());
+                map.addMarker(markerOptions);
+
+                MarkerOptions currentMarkerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title("You're here");
+                map.addMarker(currentMarkerOptions);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation.getLatLng(), 4));
+            } else {
+                MarkerOptions markerOptions = new MarkerOptions().position(userLocation.getLatLng()).title(userLocation.getTitle());
+                map.addMarker(markerOptions);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation.getLatLng(), 13f));
+            }
         }
     }
 
